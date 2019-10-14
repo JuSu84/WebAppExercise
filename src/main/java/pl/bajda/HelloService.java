@@ -8,8 +8,24 @@ public class HelloService {
 
     private LangRepository repository;
 
-    String prepareGreeting(String name){
-        return "Hello" + Optional.ofNullable(name).orElse(FALLBACK_NAME) + "!";
+    HelloService(){
+        this(new LangRepository());
     }
+
+    public HelloService(LangRepository repository) {
+        this.repository = repository;
+    }
+
+    String prepareGreeting(String name){
+        return prepareGreeting(name, FALLBACK_LANG.getId());
+    }
+
+    String prepareGreeting(String name, Long langId){
+        String welcomeMsg = repository.findById(langId).orElse(FALLBACK_LANG).getWelcomeMsg();
+        String nameToWelcome = Optional.ofNullable(name).orElse(FALLBACK_NAME);
+        return welcomeMsg + " " + nameToWelcome + "!";
+    }
+
+
 
 }

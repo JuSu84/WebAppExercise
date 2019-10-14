@@ -1,6 +1,6 @@
 package pl.bajda;
 
-public class Lang {
+ class Lang {
     private Long id;
     private String welcomeMsg;
     private String code;
